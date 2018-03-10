@@ -1,5 +1,15 @@
 // Code your JavaScript / jQuery solution here
 var turn = 0
+winCombinations = [
+ [0,1,2],
+ [3,4,5],
+ [6,7,8],
+ [0,3,6],
+ [1,4,7],
+ [2,5,8],
+ [0,4,8],
+ [2,4,6]
+];
 const squares = window.document.querySelectorAll('td');
 const messageDiv = window.document.getElementById('message');
 const gamesDiv = window.document.getElementById('games');
@@ -19,20 +29,48 @@ function updateState(ele){
   ele.innerHTML = token
 }
 
-function setMessage(){
-  
+function setMessage(message){
+  messageDiv.innerHTML = message
+  return message
 }
 
 function checkWinner(){
-
+  let state = []
+  let ele = ""
+  squares.forEach(ele => state.push(ele.innerHTML))
+  const won = winCombinations.some(ele => {
+    return state[ele[0]] !== "" && state[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]
+  })
+  if (won) {
+    let message = `Player ${player()} Won!`
+    setMessage(message)
+    return true
+  } else {
+    return false
+  }
 }
 
-function doTurn(){
+function doTurn(ele){
+  updateState(ele)
+  let state = []
+  squares.forEach(ele => state.push(ele.innerHTML))
+  if (checkWinner()) {
+    resetBoard()
+  } else if (state.every(ele => ele !== "")) {
+    setMessage("Tie game.")
+    resetBoard()
+  } else {
+    turn ++
+  }
+}
 
+function resetBoard(){
+  squares.forEach(ele => ele.innerHTML = "")
+  turn = 0
 }
 
 function attachListeners(){
-
+  squares.forEach(ele => ele.addEventListener('click', doTurn(ele), false))
 }
 // $(function(){
 //   $("#save").on("click", function(){
