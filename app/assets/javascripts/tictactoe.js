@@ -16,6 +16,9 @@ const gamesDiv = window.document.getElementById('games');
 const saveButton = window.document.getElementById('save');
 const previousButton = window.document.getElementById('previous');
 const clearButton = window.document.getElementById('clear');
+$(document).ready(function(){
+  attachListeners()
+})
 function player(){
   if (turn % 2 === 0) {
     return "X"
@@ -73,8 +76,44 @@ function resetBoard(){
 }
 
 function attachListeners(){
-  squares.forEach(ele => ele.addEventListener('click', doTurn(ele), false))
+  $('td').on('click', function() {
+   if (!$.text(this) && !checkWinner()) {
+     doTurn(this);
+    }
+  });
+  $('#save').on('click', () => saveGame());
+  $('#previous').on('click', () => showPreviousGames());
+  $('#clear').on('click', () => resetBoard());
 }
+
+function showPreviousGames(){
+  $.get('/games', function(previous){
+  if (previous.data.length > 0) {
+    previous.data.forEach(ele => addButton(ele))
+    }
+  })
+}
+
+function saveGame(){
+  let state = []
+  squares.forEach(ele => state.push(ele.innerHTML))
+  $.post('/games', state)
+}
+
+function addButton(game) {
+  $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`)
+  $(`#gameid-${game.id}`).on('click', reload(game.id))
+}
+
+function reload(id) {
+
+}
+function resetBoard(){
+  squares.forEach(ele => ele.innerHTML = "")
+  turn = 0;
+}
+
+
 // $(function(){
 //   $("#save").on("click", function(){
 //     $.post("/games", function(game){
