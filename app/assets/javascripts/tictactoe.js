@@ -102,7 +102,6 @@ function showPreviousGames(){
 }
 
 function reload(id) {
-  messageDiv.innerHTML = ""
   $.get(`/games/${id}`, (savedGame) => {
     if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
