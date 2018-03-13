@@ -107,7 +107,6 @@ function addButton(game) {
 function reload(id) {
   messageDiv.innerHTML = ""
   $.get(`/games/${id}`, (savedGame) => {
-
     if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
       for (var i =0; i < 9; i++) {
