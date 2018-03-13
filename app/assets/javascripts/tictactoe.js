@@ -33,7 +33,7 @@ function updateState(ele){
 }
 
 function setMessage(message){
-  $('#message').text
+  $('#message').text(message)
   messageDiv.innerHTML = message
   return message
 }
