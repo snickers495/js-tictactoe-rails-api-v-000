@@ -123,10 +123,16 @@ function reload(id) {
   messageDiv.innerHTML = ""
   $.get(`/games/${id}`, (savedGame) => {
     // for (var i =0; i < savedGame.data.length; i++) {
-      squares[0].innerHTML = savedGame.data
+      // let state = JSON.parse(savedGame).data;
     // }
+    const board = savedGame.data.attributes.state
+    for (var i =0; i < 9; i++) {
+      squares[i].innerHTML = board[i]
+    }
+    gameId = id;
+    turn = board.join('').length
   })
-  gameId = id;
+
 }
 
 function resetBoard(){
