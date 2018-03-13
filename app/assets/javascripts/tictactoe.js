@@ -10,16 +10,12 @@ winCombinations = [
  [0,4,8],
  [2,4,6]
 ];
-const squares = window.document.querySelectorAll('td');
-const messageDiv = window.document.getElementById('message');
-const gamesDiv = window.document.getElementById('games');
-const saveButton = window.document.getElementById('save');
-const previousButton = window.document.getElementById('previous');
-const clearButton = window.document.getElementById('clear');
+console.log(turn)
 var gameId = 0;
 $(document).ready(function(){
   attachListeners()
 })
+
 function player(){
   if (turn % 2 === 0) {
     return "X"
@@ -29,19 +25,18 @@ function player(){
 }
 
 function updateState(ele){
-  const token = player()
-  ele.innerHTML = token
+  $(ele).text(player());
 }
 
 function setMessage(message){
-  messageDiv.innerHTML = message
-  return message
+  $('#message').text(message)
 }
 
 function checkWinner(){
-  let state = []
   let winner = ""
-  squares.forEach(ele => state.push(ele.innerHTML))
+  let state = $("td").map(function() {
+    return $(this).html()
+  }).toArray();
   const won = winCombinations.some(ele => {
     if (state[ele[0]] !== "" && state[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]) {
       winner = state[ele[0]]
@@ -59,12 +54,10 @@ function checkWinner(){
 
 function doTurn(ele){
   updateState(ele)
-  let state = []
-  squares.forEach(ele => state.push(ele.innerHTML))
   if (checkWinner()) {
     saveGame()
     resetBoard()
-  } else if (state.every(ele => ele !== "")) {
+  } else if (turn === 9) {
     setMessage("Tie game.")
     saveGame()
     resetBoard()
@@ -74,8 +67,9 @@ function doTurn(ele){
 }
 
 function resetBoard(){
-  squares.forEach(ele => ele.innerHTML = "")
+  $('td').empty()
   turn = 0
+  gameId=0
 }
 
 function attachListeners(){
@@ -94,49 +88,46 @@ function showPreviousGames(){
   $('#games').empty();
   $.get('/games', function(previous){
   if (previous.data.length > 0) {
-    previous.data.forEach(ele => addButton(ele))
+    previous.data.forEach(ele => {
+      $('#games').append(`<button id="gameid-${ele.id}">${ele.id}</button><br>`)
+      $(`#gameid-${ele.id}`).on('click', reload(ele.id))
+    })
+    }
+  })
+}
+
+function reload(id) {
+  $.get(`/games/${id}`, (savedGame) => {
+    if (savedGame.data.attributes) {
+      const board = savedGame.data.attributes.state
+      $("td").text(function(index) {
+            return board[index];
+          });
+      gameId = id;
+      turn = board.join('').length
     }
   })
 }
 
 function saveGame(){
-  let state = []
-  squares.forEach(ele => state.push(ele.innerHTML))
+  const stateData = $("td").map(function() {
+    return $(this).html()
+  }).toArray();
+  const gameState = {state: stateData}
   if (gameId > 0) {
     $.ajax({
     type: 'PATCH',
     url: `/games/${gameId}`,
-    data: state})
+    data: gameState})
   } else {
-    $.post('/games', state, function(game){
+    $.post('/games', gameState, function(game){
       gameId = game.data.id
     })
   }
 }
 
-function addButton(game) {
-  $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`)
-  $(`#gameid-${game.id}`).on('click', reload(game.id))
-}
-
-function reload(id) {
-  messageDiv.innerHTML = ""
-  $.get(`/games/${id}`, (savedGame) => {
-    // for (var i =0; i < savedGame.data.length; i++) {
-      // let state = JSON.parse(savedGame).data;
-    // }
-    const board = savedGame.data.attributes.state
-    for (var i =0; i < 9; i++) {
-      squares[i].innerHTML = board[i]
-    }
-    gameId = id;
-    turn = board.join('').length
-  })
-
-}
-
 function resetBoard(){
-  squares.forEach(ele => ele.innerHTML = "")
+  $('td').empty()
   turn = 0;
   gameId = 0;
 }
