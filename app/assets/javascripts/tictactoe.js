@@ -11,7 +11,6 @@ winCombinations = [
  [2,4,6]
 ];
 const squares = window.document.querySelectorAll('td');
-const messageDiv = window.document.getElementById('message');
 const gamesDiv = window.document.getElementById('games');
 const saveButton = window.document.getElementById('save');
 const previousButton = window.document.getElementById('previous');
