@@ -39,11 +39,11 @@ function setMessage(message){
 function checkWinner(){
   let state = []
   let winner = ""
-  const board = $("td").map(function() {
+  const state = $("td").map(function() {
     return $(this).html()
   }).toArray();
   const won = winCombinations.some(ele => {
-    if (board[ele[0]] !== "" && board[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]) {
+    if (state[ele[0]] !== "" && state[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]) {
       winner = state[ele[0]]
       return true
     }
