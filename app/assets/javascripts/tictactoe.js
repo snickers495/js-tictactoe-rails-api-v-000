@@ -16,6 +16,7 @@ const gamesDiv = window.document.getElementById('games');
 const saveButton = window.document.getElementById('save');
 const previousButton = window.document.getElementById('previous');
 const clearButton = window.document.getElementById('clear');
+var gameId = 0;
 $(document).ready(function(){
   attachListeners()
 })
@@ -61,9 +62,11 @@ function doTurn(ele){
   let state = []
   squares.forEach(ele => state.push(ele.innerHTML))
   if (checkWinner()) {
+    saveGame()
     resetBoard()
   } else if (state.every(ele => ele !== "")) {
     setMessage("Tie game.")
+    saveGame()
     resetBoard()
   } else {
     turn ++
@@ -81,12 +84,14 @@ function attachListeners(){
      doTurn(this);
     }
   });
+
   $('#save').on('click', () => saveGame());
   $('#previous').on('click', () => showPreviousGames());
   $('#clear').on('click', () => resetBoard());
 }
 
 function showPreviousGames(){
+  $('#games').empty();
   $.get('/games', function(previous){
   if (previous.data.length > 0) {
     previous.data.forEach(ele => addButton(ele))
@@ -97,7 +102,16 @@ function showPreviousGames(){
 function saveGame(){
   let state = []
   squares.forEach(ele => state.push(ele.innerHTML))
-  $.post('/games', state)
+  if (gameId > 0) {
+    $.ajax({
+    type: 'PATCH',
+    url: `/games/${gameId}`,
+    data: state})
+  } else {
+    $.post('/games', state, function(game){
+      gameId = game.data.id
+    })
+  }
 }
 
 function addButton(game) {
@@ -106,30 +120,17 @@ function addButton(game) {
 }
 
 function reload(id) {
-
+  messageDiv.innerHTML = ""
+  $.get(`/games/${id}`, (savedGame) => {
+    // for (var i =0; i < savedGame.data.length; i++) {
+      squares[0].innerHTML = savedGame.data
+    // }
+  })
+  gameId = id;
 }
+
 function resetBoard(){
   squares.forEach(ele => ele.innerHTML = "")
   turn = 0;
+  gameId = 0;
 }
-
-
-// $(function(){
-//   $("#save").on("click", function(){
-//     $.post("/games", function(game){
-//
-//     })
-//   })
-// })
-
-// $(".js-more").on("click", function() {
-//       var id = $(this).data("id");
-//       $.get("/products/" + id + ".json", function(product) {
-//           var inventoryText = "<strong>Available</strong>";
-//           if(product.inventory <= 0){
-//             inventoryText = "<strong>Sold Out</strong>";
-//           }
-//           var descriptionText = "<p>" + product.description + "</p><p>" + inventoryText + "</p>";
-//           $("#product-" + id).html(descriptionText);
-//     });
-//   });
