@@ -40,10 +40,10 @@ function checkWinner(){
   let state = []
   let winner = ""
   const board = $("td").map(function() {
-+    return $(this).html()
-+  }).toArray();
+    return $(this).html()
+  }).toArray();
   const won = winCombinations.some(ele => {
-    if (state[ele[0]] !== "" && state[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]) {
+    if (board[ele[0]] !== "" && board[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]) {
       winner = state[ele[0]]
       return true
     }
