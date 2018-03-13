@@ -10,6 +10,7 @@ winCombinations = [
  [0,4,8],
  [2,4,6]
 ];
+
 const squares = window.document.querySelectorAll('td');
 const gamesDiv = window.document.getElementById('games');
 const saveButton = window.document.getElementById('save');
