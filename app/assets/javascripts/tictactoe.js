@@ -110,8 +110,7 @@ function reload(id) {
 }
 
 function saveGame(){
-  let state = []
-  squares.forEach(ele => state.push(ele.innerHTML))
+  
   if (gameId > 0) {
     $.ajax({
     type: 'PATCH',
