@@ -75,6 +75,7 @@ function doTurn(ele){
 function resetBoard(){
   $('td').empty()
   turn = 0
+  gameId=
 }
 
 function attachListeners(){
