@@ -112,7 +112,8 @@ function reload(id) {
 function saveGame(){
   const stateData = $("td").map(function() {
     return $(this).html()
-+  }).toArray();
+  }).toArray();
+  
   if (gameId > 0) {
     $.ajax({
     type: 'PATCH',
