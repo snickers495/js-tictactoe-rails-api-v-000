@@ -99,6 +99,30 @@ function showPreviousGames(){
   })
 }
 
+function addButton(game) {
+  $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`)
+  $(`#gameid-${game.id}`).on('click', reload(game.id))
+}
+
+function reload(id) {
+  messageDiv.innerHTML = ""
+  $.get(`/games/${id}`, (savedGame) => {
+    // for (var i =0; i < savedGame.data.length; i++) {
+      // let state = JSON.parse(savedGame).data;
+    // }
+
+    if (savedGame.data.length > ) {
+      const board = savedGame.data.attributes.state
+
+      for (var i =0; i < 9; i++) {
+        squares[i].innerHTML = board[i]
+      }
+      gameId = id;
+      turn = board.join('').length
+    }
+  })
+}
+
 function saveGame(){
   let state = []
   squares.forEach(ele => state.push(ele.innerHTML))
@@ -112,27 +136,6 @@ function saveGame(){
       gameId = game.data.id
     })
   }
-}
-
-function addButton(game) {
-  $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`)
-  $(`#gameid-${game.id}`).on('click', reload(game.id))
-}
-
-function reload(id) {
-  messageDiv.innerHTML = ""
-  $.get(`/games/${id}`, (savedGame) => {
-    // for (var i =0; i < savedGame.data.length; i++) {
-      // let state = JSON.parse(savedGame).data;
-    // }
-    const board = savedGame.data.attributes.state
-    for (var i =0; i < 9; i++) {
-      squares[i].innerHTML = board[i]
-    }
-    gameId = id;
-    turn = board.join('').length
-  })
-
 }
 
 function resetBoard(){
