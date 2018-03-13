@@ -33,6 +33,7 @@ function updateState(ele){
 }
 
 function setMessage(message){
+  
   messageDiv.innerHTML = message
   return message
 }
