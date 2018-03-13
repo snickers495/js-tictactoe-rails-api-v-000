@@ -130,7 +130,7 @@ function saveGame(){
 }
 
 function resetBoard(){
-  squares.forEach(ele => ele.innerHTML = "")
+  $
   turn = 0;
   gameId = 0;
 }
