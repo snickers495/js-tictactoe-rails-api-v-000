@@ -63,7 +63,7 @@ function doTurn(ele){
   if (checkWinner()) {
     saveGame()
     resetBoard()
-  } else if (state.every(ele => ele !== "")) {
+  } else if (turn ===) {
     setMessage("Tie game.")
     saveGame()
     resetBoard()
@@ -75,7 +75,7 @@ function doTurn(ele){
 function resetBoard(){
   $('td').empty()
   turn = 0
-  gameId=
+  gameId=0
 }
 
 function attachListeners(){
