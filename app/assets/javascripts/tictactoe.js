@@ -95,7 +95,7 @@ function showPreviousGames(){
   $.get('/games', function(previous){
   if (previous.data.length > 0) {
     previous.data.forEach(ele => {
-      $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`)
+      $('#games').append(`<button id="gameid-${ele.id}">${game.id}</button><br>`)
       $(`#gameid-${game.id}`).on('click', reload(game.id))
     })
     }
