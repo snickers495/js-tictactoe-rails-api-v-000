@@ -102,10 +102,6 @@ function showPreviousGames(){
   })
 }
 
-function addButton(game) {
-
-}
-
 function reload(id) {
   messageDiv.innerHTML = ""
   $.get(`/games/${id}`, (savedGame) => {
