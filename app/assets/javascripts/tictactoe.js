@@ -106,7 +106,7 @@ function reload(id) {
     if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
       for (var i =0; i < 9; i++) {
-        
+
       }
       gameId = id;
       turn = board.join('').length
