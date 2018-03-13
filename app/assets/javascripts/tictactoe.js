@@ -98,7 +98,7 @@ function showPreviousGames(){
 
 function reload(id) {
   $.get(`/games/${id}`, (savedGame) => {
-    if (savedGame.data.attributes) {
+    // if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
       $("td").text(function(index) {
             return board[index];
