@@ -28,8 +28,7 @@ function player(){
 }
 
 function updateState(ele){
-  const token = player()
-  ele.innerHTML = token
+  $(square).text(player());
 }
 
 function setMessage(message){
