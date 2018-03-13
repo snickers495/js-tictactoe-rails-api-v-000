@@ -73,7 +73,7 @@ function doTurn(ele){
 }
 
 function resetBoard(){
-  squares.forEach(ele => ele.innerHTML = "")
+  #
   turn = 0
 }
 
