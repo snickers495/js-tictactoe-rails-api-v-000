@@ -120,7 +120,7 @@ function saveGame(){
     url: `/games/${gameId}`,
     data: gameState})
   } else {
-    $.post('/games', state, function(game){
+    $.post('/games', gameState, function(game){
       gameId = game.data.id
     })
   }
