@@ -94,7 +94,9 @@ function showPreviousGames(){
   $('#games').empty();
   $.get('/games', function(previous){
   if (previous.data.length > 0) {
-    previous.data.forEach(ele => addButton(ele))
+    previous.data.forEach(ele => {
+      
+    })
     }
   })
 }
