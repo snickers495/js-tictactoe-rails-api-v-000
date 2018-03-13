@@ -58,12 +58,10 @@ function checkWinner(){
 
 function doTurn(ele){
   updateState(ele)
-  let state = []
-  squares.forEach(ele => state.push(ele.innerHTML))
   if (checkWinner()) {
     saveGame()
     resetBoard()
-  } else if (turn ===) {
+  } else if (turn === 9) {
     setMessage("Tie game.")
     saveGame()
     resetBoard()
