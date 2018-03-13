@@ -29,7 +29,7 @@ function player(){
 }
 
 function updateState(ele){
-  $(square).text(player());
+  $(ele).text(player());
 }
 
 function setMessage(message){
