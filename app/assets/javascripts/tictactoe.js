@@ -37,9 +37,8 @@ function setMessage(message){
 }
 
 function checkWinner(){
-  let state = []
   let winner = ""
-  let board = $("td").map(function() {
+  let state = $("td").map(function() {
     return $(this).html()
   }).toArray();
   const won = winCombinations.some(ele => {
