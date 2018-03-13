@@ -54,6 +54,7 @@ function checkWinner(){
 
 function doTurn(ele){
   updateState(ele)
+  turn ++
   if (checkWinner()) {
     saveGame()
     resetBoard()
@@ -61,8 +62,6 @@ function doTurn(ele){
     setMessage("Tie game.")
     saveGame()
     resetBoard()
-  } else {
-    turn ++
   }
 }
 
@@ -89,25 +88,40 @@ function showPreviousGames(){
   $.get('/games', function(previous){
   if (previous.data.length > 0) {
     previous.data.forEach(ele => {
-      $('#games').append(`<button id="gameid-${ele.id}">${ele.id}</button><br>`)
-      $(`#gameid-${ele.id}`).on('click', reload(ele.id))
+      $('#games').append(`<button id="gameid-${ele.id}" data-id="${ele.id}">${ele.id}</button><br>`)
+      $(`#gameid-${ele.id}`).on('click', reload)
     })
     }
   })
 }
 
-function reload(id) {
-  $.get(`/games/${id}`, (savedGame) => {
-    if (savedGame.data.attributes) {
-      const board = savedGame.data.attributes.state
-      $("td").text(function(index) {
-            return board[index];
-          });
-      gameId = id;
-      turn = board.join('').length
-    }
+function reload(event) {
+  var id = event.target.dataset.id
+  console.log(id)
+  $.get(`/games/${id}`, function(game) {
+    const gameBoard = game.data.attributes.state
+    console.log(gameBoard)
+    $("td").text(function(index) {
+      return gameBoard[index];
+    });
+
+    turn = gameBoard.filter(function(x) {
+      return x !== ""
+    }).length;
+    gameId = id;
   })
 }
+//   $.get(`/games/${id}`, (savedGame) => {
+//     if (savedGame.data.attributes) {
+//       const board = savedGame.data.attributes.state
+//       $("td").text(function(index) {
+//             return board[index];
+//           });
+//       gameId = id;
+//       turn = board.join('').length
+//     }
+//   })
+// }
 
 function saveGame(){
   const stateData = $("td").map(function() {
@@ -115,7 +129,7 @@ function saveGame(){
   }).toArray();
   const gameState = {state: stateData}
   if (gameId > 0) {
-    $.ajax({
+    $.get({
     type: 'PATCH',
     url: `/games/${gameId}`,
     data: gameState})
