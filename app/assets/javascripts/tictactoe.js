@@ -39,7 +39,7 @@ function setMessage(message){
 function checkWinner(){
   let state = []
   let winner = ""
-   state = $("td").map(function() {
+  let state = $("td").map(function() {
     return $(this).html()
   }).toArray();
   const won = winCombinations.some(ele => {
