@@ -39,7 +39,7 @@ function checkWinner(){
   let state = []
   let winner = ""
   squares.forEach(ele => state.push(ele.innerHTML))
-  
+  console.log(state)
   const won = winCombinations.some(ele => {
     if (state[ele[0]] !== "" && state[ele[1]] === state[ele[0]] && state[ele[1]] === state[ele[2]]) {
       winner = state[ele[0]]
