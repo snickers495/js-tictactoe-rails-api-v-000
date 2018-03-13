@@ -113,7 +113,7 @@ function saveGame(){
   const stateData = $("td").map(function() {
     return $(this).html()
   }).toArray();
-  const gameState = {}
+  const gameState = {state: stateData}
   if (gameId > 0) {
     $.ajax({
     type: 'PATCH',
