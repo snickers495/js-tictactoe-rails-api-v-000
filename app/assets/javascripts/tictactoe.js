@@ -73,8 +73,8 @@ function doTurn(ele){
 }
 
 function resetBoard(){
-  $('t')
-  turn = 0
+  $('td')
+.  turn = 0
 }
 
 function attachListeners(){
