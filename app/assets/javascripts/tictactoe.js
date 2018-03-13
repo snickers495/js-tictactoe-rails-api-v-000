@@ -118,7 +118,7 @@ function saveGame(){
     $.ajax({
     type: 'PATCH',
     url: `/games/${gameId}`,
-    data: state})
+    data: gameState})
   } else {
     $.post('/games', state, function(game){
       gameId = game.data.id
