@@ -111,7 +111,7 @@ function reload(id) {
       // let state = JSON.parse(savedGame).data;
     // }
 
-    if (savedGame.data. > 0) {
+    if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
 
       for (var i =0; i < 9; i++) {
