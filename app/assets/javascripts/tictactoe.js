@@ -105,7 +105,7 @@ function reload(id) {
           });
       gameId = id;
       turn = board.join('').length
-    }
+    // }
   })
 }
 
