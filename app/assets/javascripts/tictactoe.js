@@ -130,7 +130,7 @@ function saveGame(){
 }
 
 function resetBoard(){
-  $
+  $('td'),
   turn = 0;
   gameId = 0;
 }
