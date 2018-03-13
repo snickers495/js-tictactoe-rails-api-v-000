@@ -73,7 +73,7 @@ function doTurn(ele){
 }
 
 function resetBoard(){
-  $('td')
+  $('td').empty()
     turn = 0
 }
 
