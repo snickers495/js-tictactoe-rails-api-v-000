@@ -105,9 +105,9 @@ function reload(id) {
   $.get(`/games/${id}`, (savedGame) => {
     if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
-      for (var i =0; i < 9; i++) {
-
-      }
+      $("td").text(function(index) {
+            return gameBoard[index];
+      +    });
       gameId = id;
       turn = board.join('').length
     }
