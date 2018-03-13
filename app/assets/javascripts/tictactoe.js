@@ -106,8 +106,8 @@ function reload(id) {
     if (savedGame.data.attributes) {
       const board = savedGame.data.attributes.state
       $("td").text(function(index) {
-            return gameBoard[index];
-      +    });
+            return board[index];
+          });
       gameId = id;
       turn = board.join('').length
     }
